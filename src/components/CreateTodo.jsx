@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { createTodo } from "../services/api"
 
 function CreateTodo({ token, onTodoCreated }) {
   const [title, setTitle] = useState("")
@@ -7,30 +8,17 @@ function CreateTodo({ token, onTodoCreated }) {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    const response = await fetch("http://localhost:5059/todos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        completed: false
-      })
-    });
+    const newTodo = await createTodo(title,description,token);
 
-    if (!response.ok) {
+    if (newTodo == null) {
       alert("Failed to create todo");
       return;
     }
-
-    const newTodo = await response.json();
-
     onTodoCreated(newTodo);
 
     setTitle("");
     setDescription("");
+
   }
 
   return (

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { login } from "../services/api"
+import Register from "./Register"
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("")
@@ -7,28 +9,18 @@ function Login({ onLogin }) {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    const response = await fetch("http://localhost:5059/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
+    const data = await login(email,password)
 
-    if (!response.ok) {
+    if (data == null) {
       alert("Login failed")
-      return
+      return;
     }
-
-    const data = await response.json()
 
     onLogin(data.token)
   }
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
@@ -48,6 +40,9 @@ function Login({ onLogin }) {
 
       <button type="submit">Login</button>
     </form>
+
+    <Register />
+    </div>
   )
 }
 
