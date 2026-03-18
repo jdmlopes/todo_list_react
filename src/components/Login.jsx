@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { login } from "../services/api"
 import Register from "./Register"
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("")

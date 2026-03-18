@@ -22,14 +22,24 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Todo App</h1>
+    <div className="bg-light min-vh-100">
+      <div className="container py-5">
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1 className="fw-bold">📝 Lista de Tarefas</h1>
 
-      <TodoList token={token} />
+          <button className="btn btn-outline-danger" onClick={handleLogout}>
+            Sair
+          </button>
+        </div>
+
+        <div className="card shadow-sm">
+          <div className="card-body">
+            <TodoList token={token} />
+          </div>
+        </div>
+
+      </div>
     </div>
   )
 }

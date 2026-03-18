@@ -1,7 +1,12 @@
 const APIURL = "http://localhost:5059";
 
-export async function getTodos(token) {
-  const response = await fetch(`${APIURL}/todos`, {
+export async function getTodos(token,limit='6',page='1',orderby=null,direction=null,completed=null) {
+  let flags = `?limit=${limit}&page=${page}`;
+  if(orderby != null && direction != null)
+    flags += `&orderby=${orderby}&direction=${direction}`;
+  if(completed != null)
+    flags += `&orderby=${orderby}&direction=${direction}`;
+  const response = await fetch(`${APIURL}/todos${flags}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
