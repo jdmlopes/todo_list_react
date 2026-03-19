@@ -46,30 +46,9 @@ function TodoList({ token }) {
     }
 
     return (
-        <div>
-            <CreateTodo token={token} onTodoCreated={handleTodoCreated} />
-
-            <h2>Todos</h2>
-
-            <ul>
-                {todos.map(todo => (
-
-                    <li key={todo.id}>
-                        {todo.title} {todo.completed ? "✅" : "❌"}
-
-                        <button onClick={() => toggleTodo(todo)}>
-                            Toggle
-                        </button>
-
-                        <button onClick={() => removeTodo(todo.id)}>
-                            Delete
-                        </button>
-                    </li>
-
-                ))}
-            </ul>
-        </div>
-    )
+        <>
+        </>
+    );
 }
 
 export default TodoList

@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { login } from "../services/api"
-import Register from "./Register"
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("")
@@ -8,41 +7,22 @@ function Login({ onLogin }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
-
-    const data = await login(email,password)
-
+    const data = await login(email,password);
     if (data == null) {
-      alert("Login failed")
+      alert("Login failed");
       return;
     }
-
     onLogin(data.token)
   }
 
   return (
-    <div>
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-
-      <button type="submit">Login</button>
+    <>
+    <form action="" onSubmit={handleSubmit}>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <input type="submit" />
     </form>
-
-    <Register />
-    </div>
+    </>
   )
 }
 

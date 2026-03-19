@@ -22,24 +22,10 @@ function CreateTodo({ token, onTodoCreated }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Create Todo</h3>
+    <>
+    </>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-
-      <input
-        placeholder="Description"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-      />
-
-      <button type="submit">Add Todo</button>
-    </form>
-  )
+  );
 }
 
 export default CreateTodo
