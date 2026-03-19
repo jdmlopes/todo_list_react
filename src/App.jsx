@@ -17,13 +17,14 @@ function App() {
 
 
   return (
-    <>
+    <div
+      className="container d-flex justify-content-center align-content-center min-vh-100">
     {token == null ?
       <Auth onLogin={handleLogin}
             token={token}/> :
       <TodoList onLogout={handleLogout}
                 token={token} />}
-    </>
+    </div>
   );
 }
 

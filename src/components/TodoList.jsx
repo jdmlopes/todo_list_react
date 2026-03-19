@@ -3,7 +3,7 @@ import CreateTodo from "./CreateTodo"
 import { getTodos, putTodo } from "../services/api";
 import { deleteTodo } from "../services/api";
 
-function TodoList({ token }) {
+function TodoList({ onLogout, token }) {
     const [todos, setTodos] = useState([])
 
     useEffect(() => {
@@ -47,6 +47,7 @@ function TodoList({ token }) {
 
     return (
         <>
+        <button onClick={onLogout}>Logout</button>
         </>
     );
 }
