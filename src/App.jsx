@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div
-      className="container d-flex justify-content-center align-content-center min-vh-100">
+      className="container-fluid d-flex justify-content-center align-content-center min-vh-100">
     {token == null ?
       <Auth onLogin={handleLogin}
             token={token}/> :

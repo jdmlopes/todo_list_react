@@ -1,6 +1,6 @@
 const APIURL = "http://localhost:5059";
 
-export async function getTodos(token,limit='6',page='1',orderby=null,direction=null,completed=null) {
+export async function getTodos(token,limit='5',page='1',orderby="id",direction="desc",completed=null) {
   let flags = `?limit=${limit}&page=${page}`;
   if(orderby != null && direction != null)
     flags += `&orderby=${orderby}&direction=${direction}`;
@@ -11,6 +11,10 @@ export async function getTodos(token,limit='6',page='1',orderby=null,direction=n
       Authorization: `Bearer ${token}`,
     },
   });
+
+  if(response.status === 401)
+    return null;
+  
 
   return response.json();
 }
