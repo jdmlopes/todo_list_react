@@ -8,12 +8,16 @@ function TodoList({ onLogout, token }) {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
+    const [orderBy, setOrderBy] = useState("id"); // id, title or completed
+    const [direction, setDirection] = useState("desc") //desc or asc
+    const [filter, setFilter] = useState(null); // null, true or false
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         if (!token) return;
 
         async function fetchTodos() {
-            const result = await getTodos(token, limit, page);
+            const result = await getTodos(token, limit, page, orderBy, direction, filter);
             if (!result) {
                 onLogout();
                 return;
@@ -25,10 +29,10 @@ function TodoList({ onLogout, token }) {
         }
 
         fetchTodos();
-    }, [token, onLogout, limit, page]);
+    }, [token, onLogout, limit, page, orderBy, direction, filter]);
 
     async function loadTodos() {
-        const result = await getTodos(token, limit, page);
+        const result = await getTodos(token, limit, page, orderBy, direction, filter);
         if (!result) {
             onLogout();
             return;
@@ -49,7 +53,38 @@ function TodoList({ onLogout, token }) {
 
             <div className="border rounded shadow px-5 pt-5 pb-2">
                 <h2 className="mb-3">Tarefas ({total})</h2>
-                <CreateTodo token={token} onCreate={loadTodos} />
+                <div className="row">
+                    <div className="mb-3 col">
+                        <button onClick={() => setShowForm(true)} className="btn btn-success">Criar Tarefa</button>
+                    </div>
+                    <div className="col btn-group mb-3 d-flex justify-content-end">
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown">
+                                Ordenar
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("id"); setDirection("desc"); }}>Por Mais Recentes</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("id"); setDirection("asc"); }}>Por Mais Antigos</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("title"); setDirection("asc"); }}>Por Título A-Z</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("title"); setDirection("desc"); }}>Por Título Z-A</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("completed"); setDirection("desc"); }}>Finalizados Primeiro</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => { setOrderBy("completed"); setDirection("asc"); }}>Pendentes Primeiro</a></li>
+                            </ul>
+                        </div>
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown">
+                                Filtrar
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#" onClick={() => setFilter(null)}>Todos</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => setFilter("true")}>Finalizados</a></li>
+                                <li><a className="dropdown-item" href="#" onClick={() => setFilter("false")}>Pendentes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <CreateTodo token={token} onCreate={loadTodos} showForm={showForm} setShowForm={setShowForm}/>
+
+                </div>
                 {todos.map((todo) => (
                     <TodoItem todo={todo} token={token} key={todo.id} />
                 ))}
