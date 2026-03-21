@@ -3,10 +3,12 @@ import Auth from "./components/Auth";
 import TodoList from "./components/TodoList"
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [username, setUsername] = useState("");
 
-  function handleLogin(newToken) {
+  function handleLogin(newToken, name) {
     setToken(newToken);
+    setUsername(name);
     localStorage.setItem("token", newToken);
   }
 
@@ -23,7 +25,8 @@ function App() {
       <Auth onLogin={handleLogin}
             token={token}/> :
       <TodoList onLogout={handleLogout}
-                token={token} />}
+                token={token}
+                username={username} />}
     </div>
   );
 }

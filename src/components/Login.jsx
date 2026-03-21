@@ -12,7 +12,7 @@ function Login({ onLogin }) {
       alert("Login failed");
       return;
     }
-    onLogin(data.token)
+    onLogin(data.token,data.name)
   }
 
   return (

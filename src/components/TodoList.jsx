@@ -3,7 +3,7 @@ import CreateTodo from "./CreateTodo"
 import { getTodos } from "../services/api";
 import TodoItem from "./TodoItem";
 
-function TodoList({ onLogout, token }) {
+function TodoList({ onLogout, token, username }) {
     const [todos, setTodos] = useState([]);
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
@@ -12,6 +12,7 @@ function TodoList({ onLogout, token }) {
     const [direction, setDirection] = useState("desc") //desc or asc
     const [filter, setFilter] = useState(null); // null, true or false
     const [showForm, setShowForm] = useState(false);
+    
 
     useEffect(() => {
         if (!token) return;
@@ -45,14 +46,14 @@ function TodoList({ onLogout, token }) {
 
 
     return (
-        <div className="container mt-5 mb-5">
+        <div className="container mt-5 mb-5 px-0">
             <div className="d-flex justify-content-between p-2">
                 <h1>📝 Lista de Tarefas</h1>
                 <button onClick={onLogout} className="btn btn-outline-danger">Logout</button>
             </div>
 
-            <div className="border rounded shadow px-5 pt-5 pb-2">
-                <h2 className="mb-3">Tarefas ({total})</h2>
+            <div className="border rounded shadow px-1 px-md-5 pt-5 pb-2">
+                <h2 className="mb-3">Tarefas de {username} ({total})</h2>
                 <div className="row">
                     <div className="mb-3 col">
                         <button onClick={() => setShowForm(true)} className="btn btn-success">Criar Tarefa</button>
