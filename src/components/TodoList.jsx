@@ -87,7 +87,7 @@ function TodoList({ onLogout, token, username }) {
 
                 </div>
                 {todos.map((todo) => (
-                    <TodoItem todo={todo} token={token} key={todo.id} />
+                    <TodoItem todo={todo} token={token} key={todo.id} reload={loadTodos}/>
                 ))}
 
                 <ul className="pagination">

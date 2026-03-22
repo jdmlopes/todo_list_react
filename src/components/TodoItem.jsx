@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { putTodo } from "../services/api";
+import { deleteTodo, putTodo } from "../services/api";
 
 
-function TodoItem({ todo, token }) {
+function TodoItem({ todo, token, reload }) {
     const [title, setTitle] = useState(todo.title);
     const [description, setDescription] = useState(todo.description);
     const [completed, setCompleted] = useState(todo.completed)
@@ -20,6 +20,17 @@ function TodoItem({ todo, token }) {
         if (!result) {
             alert("Failed to update todo");
         }
+    }
+
+    async function removeTodo() {
+        const deleted = deleteTodo(todo.id,token);
+        if(!deleted){
+            alert("Tarefa não foi excluída");
+            return;
+        }
+        reload();
+        alert("Tarefa excluida com sucesso");
+
     }
 
     return (
@@ -43,14 +54,19 @@ function TodoItem({ todo, token }) {
                         }}
                     />
                 </div>
-                <textarea
-                    value={description}
-                    className="border-0 w-100"
-                    rows={4}
-                    style={{ resize: "none" }}
-                    onChange={(e) => setDescription(e.target.value)}
-                    onBlur={updateTodo}
-                />
+                <div className="d-flex justify-content-between gap-5">
+                    <textarea
+                        value={description}
+                        className="border-0 w-100"
+                        rows={4}
+                        style={{ resize: "none" }}
+                        onChange={(e) => setDescription(e.target.value)}
+                        onBlur={updateTodo}
+                    />
+                    <div className="align-self-end">
+                        <button className="btn fs-3 text-danger p-0" onClick={removeTodo}><i className="bi bi-trash"></i></button>
+                    </div>
+                </div>
 
             </form>
         </div>
